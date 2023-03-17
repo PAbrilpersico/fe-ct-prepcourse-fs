@@ -69,9 +69,8 @@ function tieneEmail(objetoUsuario) {
    // Verifica si el "objetoUsuario", en su propiedad "email", posee un valor definido.
    // En ese caso retornar true. Caso contrario, false.
    // Tu código:
-   if(objetoUsuario.email !== undefined && objetoUsuario.email !== null){
-      return true;
-   } else return false;
+   if(objetoUsuario['email']) return true 
+   return false;
 
 } 
 
@@ -123,10 +122,11 @@ function pasarUsuarioAPremium(objetoMuchosUsuarios) {
    // Cada usuario tiene una propiedad llamada "esPremium".
    // Define esta propiedad de todos los usuarios como true.
    // Retornar el arreglo.
-   // Tu código:
-   for(let i = 0; i< objetoMuchosUsuarios.length; i++){
-      objetoMuchosUsuarios[i].esPremium = true
-   } return objetoMuchosUsuarios;
+   // Tu código: // la palabra USUARIOS pasa a ser cada elemto del array que estamos recorriendo 
+   for(let usuarios of objetoMuchosUsuarios){
+      usuarios.esPremium = true 
+   }
+   return objetoMuchosUsuarios;
 }
 
 function sumarLikesDeUsuario(objetoUsuario) {
@@ -134,19 +134,16 @@ function sumarLikesDeUsuario(objetoUsuario) {
    // Este arreglo contiene objetos (post).
    // Cada post posee una propiedad llamada "likes". Esta propiedad es un número.
    // Debes sumar los likes de todos los post y retornar el resultado.
-   // Tu código:
-   var likes = 0
-
-   for(var i in objetoUsuario.posts){
-      likes += objetoUsuario.posts[i].likes
-   }return likes;
-
+   // Tu código: // con el ForEACH recorro el arreglo y determino que cada elemento del array se llama 'post'
+   // post.likes ----> estoy ingresando a la propiedad 'likes' de cada elemento(post)
+   var acc = 0 
+   objetoUsuario.posts.forEach((post)=> {
+      acc += post.likes
+   })
+   return acc;
    
    
    
-   
-
-
 
 
 }
@@ -167,9 +164,9 @@ function agregarMetodoCalculoDescuento(objetoProducto) {
    var precioFinal =0
 
 
-   objetoProducto['calcularPrecioDescuento'] = function(){
-      descuento = objetoProducto.precio * objetoProducto.porcentajeDeDescuento;
-      precioFinal = objetoProducto.precio - descuento;
+   objetoProducto.calcularPrecioDescuento = function(){
+      descuento = this.precio * this.porcentajeDeDescuento;
+      precioFinal = this.precio - descuento;
       return precioFinal;
       
    }; return objetoProducto;
